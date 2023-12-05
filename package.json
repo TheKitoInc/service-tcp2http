@@ -4,6 +4,8 @@
   "description": "TCP Listener to HTTP Messages",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +17,13 @@
   "bugs": {
     "url": "https://github.com/TheKito/TCP2HTTP/issues"
   },
-  "homepage": "https://github.com/TheKito/TCP2HTTP"
+  "homepage": "https://github.com/TheKito/TCP2HTTP",
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "fetch": "^1.1.0",
+    "net": "^1.0.2"
+  }
 }
