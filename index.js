@@ -1,4 +1,5 @@
 
+const packageTermination = Buffer.from("\x0D\x0A");
 
 const net = require("net");
 const crypto = require("crypto");
