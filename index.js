@@ -1,4 +1,7 @@
+const argv = require('minimist')(process.argv.slice(2));
 
+const serviceURL = argv.serviceURL;
+const servicePort = argv.servicePort;
 const packageTermination = Buffer.from("\x0D\x0A");
 
 const net = require("net");
