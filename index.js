@@ -1,72 +1,70 @@
-const argv = require('minimist')(process.argv.slice(2));
+const argv = require('minimist')(process.argv.slice(2))
 
-const serviceURL = argv.serviceURL;
-const servicePort = argv.servicePort;
-const packageTermination = Buffer.from("\x0D\x0A");
+const serviceURL = argv.serviceURL
+const servicePort = argv.servicePort
+const packageTermination = Buffer.from('\x0D\x0A')
 
-const net = require("net");
-const crypto = require("crypto");
+const net = require('net')
+const crypto = require('crypto')
 
-const server = net.createServer();
+const server = net.createServer()
 
-server.on("connection", handleConnection);
+server.on('connection', handleConnection)
 
 server.listen(servicePort, function () {
-  console.log("server listening to %j", server.address());
-});
+  console.log('server listening to %j', server.address())
+})
 
-function handleConnection(conn) {
-  var connectionID = crypto.randomUUID();
-  var buffer = Buffer.alloc(0);
+function handleConnection (conn) {
+  const connectionID = crypto.randomUUID()
+  let buffer = Buffer.alloc(0)
 
-  var remoteAddress = conn.remoteAddress + ":" + conn.remotePort;
-  console.log("new client connection from %s", remoteAddress);
-  conn.on("data", onConnData);
-  conn.once("close", onConnClose);
-  conn.on("error", onConnError);
+  const remoteAddress = conn.remoteAddress + ':' + conn.remotePort
+  console.log('new client connection from %s', remoteAddress)
+  conn.on('data', onConnData)
+  conn.once('close', onConnClose)
+  conn.on('error', onConnError)
 
-  function onConnData(data) {
-    buffer = Buffer.concat([buffer, data]);
+  function onConnData (data) {
+    buffer = Buffer.concat([buffer, data])
 
-    var bufferIndex = buffer.indexOf(packageTermination);
-    while(bufferIndex>-1)
-    {
-      var pkg = buffer.subarray(0,bufferIndex + packageTermination.length);
-      buffer = buffer.subarray(bufferIndex + packageTermination.length);
-      bufferIndex = buffer.indexOf(packageTermination);
+    let bufferIndex = buffer.indexOf(packageTermination)
+    while (bufferIndex > -1) {
+      const pkg = buffer.subarray(0, bufferIndex + packageTermination.length)
+      buffer = buffer.subarray(bufferIndex + packageTermination.length)
+      bufferIndex = buffer.indexOf(packageTermination)
 
-    console.log(pkg);
+      console.log(pkg)
       makeServiceRequest(connectionID, pkg).then(
         function (data) {
-    console.log(Buffer.concat([data]));
+          console.log(Buffer.concat([data]))
 
-          conn.write(data);
+          conn.write(data)
         }
-      );
-
+      )
     }
   }
 
-  function onConnClose() {
-    console.log("connection from %s closed", remoteAddress);
+  function onConnClose () {
+    console.log('connection from %s closed', remoteAddress)
   }
 
-  function onConnError(err) {
-    console.log("Connection %s error: %s", remoteAddress, err.message);
+  function onConnError (err) {
+    console.log('Connection %s error: %s', remoteAddress, err.message)
   }
 }
 
-async function makeServiceRequest(connectionID, requestText) {
+async function makeServiceRequest (connectionID, requestText) {
   return await fetch(serviceURL, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/octet-stream",
-      "X-Connection-Id": connectionID,
+      'Content-Type': 'application/octet-stream',
+      'X-Connection-Id': connectionID
     },
-    body: requestText,
+    body: requestText
   })
     .then((response) => response.arrayBuffer())
     .then((responseArrayBuffer) => {
-      return  Buffer.from(responseArrayBuffer);
-    });
+      return Buffer.from(responseArrayBuffer)
+    })
 }
