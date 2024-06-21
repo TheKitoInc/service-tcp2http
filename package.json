@@ -1,29 +1,31 @@
 {
-  "name": "tcp2http",
+  "name": "service-tcp2http",
   "version": "1.0.0",
-  "description": "TCP Listener to HTTP Messages",
+  "description": "transfer TCP connections to HTTP Messages",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/TheKito/TCP2HTTP.git"
+    "url": "git+https://github.com/TheKitoInc/service-tcp2http.git"
   },
-  "author": "TheKito",
-  "license": "LGPL-3.0-or-later",
+  "keywords": [
+    "TCP",
+    "HTTP",
+    "Connection",
+    "Parser"
+  ],
+  "author": "TheKitoInc",
+  "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/TheKito/TCP2HTTP/issues"
+    "url": "https://github.com/TheKitoInc/service-tcp2http/issues"
   },
-  "homepage": "https://github.com/TheKito/TCP2HTTP",
-  "devDependencies": {
-    "nodemon": "^3.0.2"
-  },
+  "homepage": "https://github.com/TheKitoInc/service-tcp2http#readme",
   "dependencies": {
-    "fetch": "^1.1.0",
-    "minimist": "^1.2.8",
-    "net": "^1.0.2"
+    "minimist": "^1.2.8"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
