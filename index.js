@@ -4,8 +4,8 @@ const serviceURL = argv.serviceURL;
 const servicePort = argv.servicePort;
 const packageTermination = Buffer.from("\x0D\x0A");
 
-const net = require('node:net')
-const crypto = require('node:crypto')
+const net = require("node:net");
+const crypto = require("node:crypto");
 const { makeServiceRequest } = require("./src/http");
 
 const server = net.createServer()
