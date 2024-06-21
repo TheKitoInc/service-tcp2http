@@ -4,8 +4,8 @@ const serviceURL = argv.serviceURL
 const servicePort = argv.servicePort
 const packageTermination = Buffer.from('\x0D\x0A')
 
-const net = require('net')
-const crypto = require('crypto')
+const net = require('node:net')
+const crypto = require('node:crypto')
 
 const server = net.createServer()
 
