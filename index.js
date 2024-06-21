@@ -26,8 +26,8 @@ function handleConnection(conn) {
   conn.once("close", onConnClose);
   conn.on("error", onConnError);
 
-  function onConnData (data) {
-    buffer = Buffer.concat([buffer, data])
+  function onConnData(data) {
+    buffer = Buffer.concat([buffer, data]);
 
     let bufferIndex = buffer.indexOf(packageTermination)
     while (bufferIndex > -1) {
