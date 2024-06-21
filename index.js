@@ -50,7 +50,7 @@ function handleConnection (conn) {
     console.log("connection from %s closed", remoteAddress);
   }
 
-  function onConnError (err) {
-    console.log('Connection %s error: %s', remoteAddress, err.message)
+  function onConnError(err) {
+    console.log("Connection %s error: %s", remoteAddress, err.message);
   }
 }
