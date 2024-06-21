@@ -16,9 +16,9 @@ server.listen(servicePort, function () {
   console.log("server listening to %j", server.address());
 });
 
-function handleConnection (conn) {
-  const connectionID = crypto.randomUUID()
-  let buffer = Buffer.alloc(0)
+function handleConnection(conn) {
+  const connectionID = crypto.randomUUID();
+  let buffer = Buffer.alloc(0);
 
   const remoteAddress = conn.remoteAddress + ':' + conn.remotePort
   console.log('new client connection from %s', remoteAddress)
