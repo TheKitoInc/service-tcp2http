@@ -1,6 +1,10 @@
 // http.js
 
-module.exports.makeServiceRequest = async function (connectionID, serviceURL, requestText) {
+module.exports.makeServiceRequest = async function (
+  connectionID,
+  serviceURL,
+  requestText
+) {
   return await fetch(serviceURL, {
     method: "POST",
     headers: {
