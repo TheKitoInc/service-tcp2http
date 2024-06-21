@@ -6,6 +6,7 @@ const packageTermination = Buffer.from('\x0D\x0A')
 
 const net = require('node:net')
 const crypto = require('node:crypto')
+const { makeServiceRequest } = require("./src/http");
 
 const server = net.createServer()
 
@@ -52,19 +53,4 @@ function handleConnection (conn) {
   function onConnError (err) {
     console.log('Connection %s error: %s', remoteAddress, err.message)
   }
-}
-
-async function makeServiceRequest (connectionID, requestText) {
-  return await fetch(serviceURL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/octet-stream',
-      'X-Connection-Id': connectionID
-    },
-    body: requestText
-  })
-    .then((response) => response.arrayBuffer())
-    .then((responseArrayBuffer) => {
-      return Buffer.from(responseArrayBuffer)
-    })
 }
