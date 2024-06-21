@@ -36,7 +36,7 @@ function handleConnection (conn) {
       bufferIndex = buffer.indexOf(packageTermination)
 
       console.log(pkg)
-      makeServiceRequest(connectionID, pkg).then(
+      makeServiceRequest(connectionID,serviceURL, pkg).then(
         function (data) {
           console.log(Buffer.concat([data]))
 
