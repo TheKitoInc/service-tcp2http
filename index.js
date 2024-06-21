@@ -31,18 +31,16 @@ function handleConnection(conn) {
 
     let bufferIndex = buffer.indexOf(packageTermination);
     while (bufferIndex > -1) {
-      const pkg = buffer.subarray(0, bufferIndex + packageTermination.length)
-      buffer = buffer.subarray(bufferIndex + packageTermination.length)
-      bufferIndex = buffer.indexOf(packageTermination)
+      const pkg = buffer.subarray(0, bufferIndex + packageTermination.length);
+      buffer = buffer.subarray(bufferIndex + packageTermination.length);
+      bufferIndex = buffer.indexOf(packageTermination);
 
-      console.log(pkg)
-      makeServiceRequest(connectionID,serviceURL, pkg).then(
-        function (data) {
-          console.log(Buffer.concat([data]))
+      console.log(pkg);
+      makeServiceRequest(connectionID, serviceURL, pkg).then(function (data) {
+        console.log(Buffer.concat([data]));
 
-          conn.write(data)
-        }
-      )
+        conn.write(data);
+      });
     }
   }
 
