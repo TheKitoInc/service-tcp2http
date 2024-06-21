@@ -4,30 +4,18 @@ const serviceURL = argv.serviceURL;
 const servicePort = argv.servicePort;
 const packageTermination = Buffer.from("\x0D\x0A");
 
-const net = require("node:net");
 const crypto = require("node:crypto");
 const { makeServiceRequest } = require("./src/client/http");
+const { createTCPServer } = require("./src/server/tcp");
 
-const server = net.createServer();
+createTCPServer(servicePort, function (err, connectionContext) {
+  if (err) {
+    console.log(err);
+  } else {
+    connectionContext.connectionID =
+      connectionContext.connectionID || crypto.randomUUID();
 
-server.on("connection", handleConnection);
-
-server.listen(servicePort, function () {
-  console.log("server listening to %j", server.address());
-});
-
-function handleConnection(conn) {
-  const connectionID = crypto.randomUUID();
-  let buffer = Buffer.alloc(0);
-
-  const remoteAddress = conn.remoteAddress + ":" + conn.remotePort;
-  console.log("new client connection from %s", remoteAddress);
-  conn.on("data", onConnData);
-  conn.once("close", onConnClose);
-  conn.on("error", onConnError);
-
-  function onConnData(data) {
-    buffer = Buffer.concat([buffer, data]);
+    buffer = connectionContext.bufferInput;
 
     let bufferIndex = buffer.indexOf(packageTermination);
     while (bufferIndex > -1) {
@@ -36,19 +24,13 @@ function handleConnection(conn) {
       bufferIndex = buffer.indexOf(packageTermination);
 
       console.log(pkg);
-      makeServiceRequest(connectionID, serviceURL, pkg).then(function (data) {
-        console.log(Buffer.concat([data]));
+      makeServiceRequest(connectionContext.connectionID, serviceURL, pkg).then(
+        function (data) {
+          console.log(Buffer.concat([data]));
 
-        conn.write(data);
-      });
+          conn.write(data);
+        }
+      );
     }
   }
-
-  function onConnClose() {
-    console.log("connection from %s closed", remoteAddress);
-  }
-
-  function onConnError(err) {
-    console.log("Connection %s error: %s", remoteAddress, err.message);
-  }
-}
+});
