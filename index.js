@@ -13,8 +13,8 @@ const server = net.createServer();
 server.on("connection", handleConnection);
 
 server.listen(servicePort, function () {
-  console.log('server listening to %j', server.address())
-})
+  console.log("server listening to %j", server.address());
+});
 
 function handleConnection (conn) {
   const connectionID = crypto.randomUUID()
