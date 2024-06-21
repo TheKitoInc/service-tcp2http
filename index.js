@@ -8,9 +8,9 @@ const net = require("node:net");
 const crypto = require("node:crypto");
 const { makeServiceRequest } = require("./src/http");
 
-const server = net.createServer()
+const server = net.createServer();
 
-server.on('connection', handleConnection)
+server.on("connection", handleConnection);
 
 server.listen(servicePort, function () {
   console.log('server listening to %j', server.address())
