@@ -46,8 +46,8 @@ function handleConnection (conn) {
     }
   }
 
-  function onConnClose () {
-    console.log('connection from %s closed', remoteAddress)
+  function onConnClose() {
+    console.log("connection from %s closed", remoteAddress);
   }
 
   function onConnError (err) {
