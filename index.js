@@ -20,11 +20,11 @@ function handleConnection(conn) {
   const connectionID = crypto.randomUUID();
   let buffer = Buffer.alloc(0);
 
-  const remoteAddress = conn.remoteAddress + ':' + conn.remotePort
-  console.log('new client connection from %s', remoteAddress)
-  conn.on('data', onConnData)
-  conn.once('close', onConnClose)
-  conn.on('error', onConnError)
+  const remoteAddress = conn.remoteAddress + ":" + conn.remotePort;
+  console.log("new client connection from %s", remoteAddress);
+  conn.on("data", onConnData);
+  conn.once("close", onConnClose);
+  conn.on("error", onConnError);
 
   function onConnData (data) {
     buffer = Buffer.concat([buffer, data])
