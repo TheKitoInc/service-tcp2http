@@ -29,7 +29,7 @@ function handleConnection(conn) {
   function onConnData(data) {
     buffer = Buffer.concat([buffer, data]);
 
-    let bufferIndex = buffer.indexOf(packageTermination)
+    let bufferIndex = buffer.indexOf(packageTermination);
     while (bufferIndex > -1) {
       const pkg = buffer.subarray(0, bufferIndex + packageTermination.length)
       buffer = buffer.subarray(bufferIndex + packageTermination.length)
