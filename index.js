@@ -6,7 +6,7 @@ const packageTermination = Buffer.from("\x0D\x0A");
 
 const net = require("node:net");
 const crypto = require("node:crypto");
-const { makeServiceRequest } = require("./src/http");
+const { makeServiceRequest } = require("./src/client/http");
 
 const server = net.createServer();
 
